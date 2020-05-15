@@ -11,11 +11,10 @@
 %>
 
 <%
-
 // Service에 getArticleList()함수를 호출하여 전체 메세지 레코드 검색 
-ListArticleService service = ListArticleService.getInstance();
-List <BoardRec> mList =  null; 
-mList = service.getArticleList();
+	ListArticleService service = ListArticleService.getInstance();
+	List <BoardRec> mList =  null; 
+	mList = service.getArticleList();
 %>
 
 <!DOCTYPE html>
@@ -47,7 +46,14 @@ mList = service.getArticleList();
 		<% for(BoardRec rec : mList){ %>
 		<tr>
 			<td><a><%=rec.getArticleId() %></a></td>
-			<td><a href="BoardView.jsp?articleId=<%=rec.getArticleId() %>"><%=rec.getTitle() %></a></td>
+			<td>
+			<%for(int i=0;i<rec.getLevel();i++){%>
+			&nbsp;&nbsp;
+			<%}%>
+			<%if(rec.getLevel()!=0){ %>
+			<img src='imgs/board_re.gif'/>
+			<%} %>
+			<a href="BoardView.jsp?articleId=<%=rec.getArticleId() %>"><%=rec.getTitle() %></a></td>
 			<td><a><%=rec.getWriterName() %></a></td>		
 			<td><a><%=rec.getPostingDate() %></a></td>
 			<td><a><%=rec.getReadCount() %></a></td>

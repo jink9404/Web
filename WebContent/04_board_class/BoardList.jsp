@@ -14,10 +14,12 @@
 <%
 // Service에 getArticleList()함수를 호출하여 전체 메세지 레코드 검색 
 	String pNum = request.getParameter("page");
+	int currentPage = (pNum!=null)? Integer.parseInt(pNum):1;
 	ListArticleService service = ListArticleService.getInstance();
 	List <BoardRec> mList =  null; 
 	mList = service.getArticleList(pNum);
 	int totalPageCount = service.getTotalCount();
+	
 %>
 
 <!DOCTYPE html>
@@ -70,9 +72,19 @@
 			</td>
 		</tr>
 	</table>
-	
-	<% for(int i = 1; i<= totalPageCount; i++){ %>
-		[<a href="BoardList.jsp?page=<%=i %>"><%=i %></a>]
-	<% }//end of for%>
+	<a href=""><<</a>
+	<% for(int i = currentPage-1; i<= currentPage+1 && currentPage<=totalPageCount; i++){ %>
+		<%if(i == 0)continue; %>
+		
+		<%if(i != currentPage){ %>
+			[<a href="BoardList.jsp?page=<%=i %>"><%=i %></a>]
+		<%}else{ %>
+			[<%=i %>]
+		<%} //if (i != currentPage) end%>
+		<%if(currentPage==totalPageCount){
+			out.write("["+(i+1)+"]");
+			break; }%>
+	<%}//end of for%>
+	<a href="">>></a>
 </BODY>
 </HTML>

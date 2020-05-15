@@ -12,6 +12,10 @@ public class ListArticleService {
 	private int pageTotalCount;		// 전체 페이지 수
 	private int countPerPage = 5;	// 한페이지당 레코드 수
 	
+	public int getCountPerPage() {
+		return countPerPage;
+	}
+
 	private static ListArticleService instance;
 	public static ListArticleService getInstance()  throws BoardException{
 		if( instance == null )

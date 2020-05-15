@@ -14,9 +14,9 @@ public class BoardDao
 	
 	// DB 연결시  관한 변수 
 	private static final String 	dbDriver	=	"oracle.jdbc.driver.OracleDriver";
-	private static final String		dbUrl		=	"jdbc:oracle:thin:@127.0.0.1:1521:orcl";
-	private static final String		dbUser		=	"scott";
-	private static final String		dbPass		=	"tiger";
+	private static final String		dbUrl		=	"jdbc:oracle:thin:@192.168.0.11:1521:orcl";
+	private static final String		dbUser		=	"MJ";
+	private static final String		dbPass		=	"0413";
 	
 	
 	private Connection	 		con;	
@@ -57,7 +57,13 @@ public class BoardDao
 		ResultSet rs = null;
 		int groupId=1;
 		try{
-
+			con = DriverManager.getConnection(dbUrl,dbUser,dbPass);
+			String sql = "SELECT SEQ_GROUP_ID_ARTICLE.nextval groupId FROM dual";
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				groupId = rs.getInt("groupId");
+			}
 			return groupId;
 		}catch( Exception ex ){
 			throw new BoardException("게시판 ) 게시글 입력 전에 그룹번호 얻어올 때  : " + ex.toString() );	
@@ -78,10 +84,34 @@ public class BoardDao
 		Statement stmt	= null;
 		PreparedStatement ps = null;
 		try{
-
+			con = DriverManager.getConnection(dbUrl,dbUser,dbPass);
+			String sql ="INSERT INTO article("
+					+ "ARTICLE_ID, GROUP_ID,SEQUENCE_NO,"
+					+ "POSTING_DATE,READ_COUNT,WRITER_NAME,"
+					+ "PASSWORD,TITLE,CONTENT)"
+					+ " VALUES(SEQ_ARTICLE_ID_ARTICLE.nextval,?,?,"
+					+ "		   sysdate,0,?,"
+					+ "        ?,?,?)";
 			
-
-			return -1;
+			
+			
+			ps = con.prepareStatement(sql);
+			ps.setInt(1,rec.getGroupId());
+			ps.setString(2, rec.getSequenceNo());
+			ps.setString(3, rec.getWriterName());
+			ps.setString(4, rec.getPassword());
+			ps.setString(5, rec.getTitle());
+			ps.setString(6, rec.getContent());
+			
+			ps.executeUpdate();
+			
+			String sql2 = "SELECT SEQ_ARTICLE_ID_ARTICLE.currval articleId FROM DUAL";
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql2);
+			rs.next();
+			int articleId = rs.getInt("articleId");
+			
+			return articleId;
 		
 		}catch( Exception ex ){
 			throw new BoardException("게시판 ) DB에 입력시 오류  : " + ex.toString() );	
@@ -107,8 +137,22 @@ public class BoardDao
 		boolean isEmpty = true;
 		
 		try{
-
-
+			con = DriverManager.getConnection(dbUrl,dbUser,dbPass);
+			String sql = "SELECT ARTICLE_ID,GROUP_ID,SEQUENCE_NO,POSTING_DATE,READ_COUNT,WRITER_NAME,TITLE FROM ARTICLE ORDER BY SEQUENCE_NO DESC";
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				BoardRec rec_tmp = new BoardRec();
+				rec_tmp.setArticleId(rs.getInt("ARTICLE_ID"));
+				rec_tmp.setGroupId(rs.getInt("GROUP_ID"));
+				rec_tmp.setSequenceNo(rs.getString("SEQUENCE_NO"));
+				rec_tmp.setPostingDate(rs.getString("POSTING_DATE"));
+				rec_tmp.setReadCount(rs.getInt("READ_COUNT"));
+				rec_tmp.setWriterName(rs.getString("WRITER_NAME"));
+				rec_tmp.setTitle(rs.getString("TITLE"));
+				mList.add(rec_tmp);
+				isEmpty = false;
+			}
 			
 			if( isEmpty ) return Collections.emptyList();
 			
@@ -133,7 +177,21 @@ public class BoardDao
 		BoardRec rec = new BoardRec();
 		
 		try{
-
+			con = DriverManager.getConnection(dbUrl,dbUser,dbPass);
+			String sql = "SELECT * FROM ARTICLE WHERE ARTICLE_ID=?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+					rec.setArticleId(rs.getInt("ARTICLE_ID"));
+					rec.setContent(rs.getString("CONTENT"));
+					rec.setGroupId(rs.getInt("GROUP_ID"));
+					rec.setPostingDate(rs.getString("POSTING_DATE"));
+					rec.setReadCount(rs.getInt("READ_COUNT"));
+					rec.setSequenceNo(rs.getString("SEQUENCE_NO"));
+					rec.setTitle(rs.getString("TITLE"));
+					rec.setWriterName(rs.getString("WRITER_NAME"));
+			}
 			
 			return rec;
 		}catch( Exception ex ){
@@ -152,9 +210,12 @@ public class BoardDao
 
 		PreparedStatement ps = null;
 		try{
-
-
-		
+			con=DriverManager.getConnection(dbUrl,dbUser,dbPass);
+			String sql = "UPDATE ARTICLE SET READ_COUNT=1+READ_COUNT WHERE ARTICLE_ID =? ";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, article_id);
+			ps.executeUpdate();
+			
 		}catch( Exception ex ){
 			throw new BoardException("게시판 ) 게시글 볼 때 조회수 증가시 오류  : " + ex.toString() );	
 		} finally{
@@ -171,9 +232,14 @@ public class BoardDao
 
 		PreparedStatement ps = null;
 		try{
-
-
-			return 0; // 나중에 수정된 수를 리턴하시오.
+			con = DriverManager.getConnection(dbUrl,dbUser,dbPass);
+			String sql = "UPDATE ARTICLE SET TITLE=?,CONTENT=? WHERE ARTICLE_ID=? AND PASSWORD=?";
+			ps=con.prepareStatement(sql);
+			ps.setString(1, rec.getTitle());
+			ps.setString(2, rec.getContent());
+			ps.setInt(3, rec.getArticleId());
+			ps.setString(4, rec.getPassword());
+			return ps.executeUpdate(); // 나중에 수정된 수를 리턴하시오.
 		
 		}catch( Exception ex ){
 			throw new BoardException("게시판 ) 게시글 수정시 오류  : " + ex.toString() );	
@@ -193,9 +259,13 @@ public class BoardDao
 
 		PreparedStatement ps = null;
 		try{
-
-
-			return 0; // 나중에 수정된 수를 리턴하시오.
+			con = DriverManager.getConnection(dbUrl,dbUser,dbPass);
+			String sql ="DELETE FROM ARTICLE WHERE ARTICLE_ID=? AND PASSWORD=?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, article_id);
+			ps.setString(2, password);
+			
+			return ps.executeUpdate(); // 나중에 수정된 수를 리턴하시오.
 		
 		}catch( Exception ex ){
 			throw new BoardException("게시판 ) 게시글 수정시 오류  : " + ex.toString() );	

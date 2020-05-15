@@ -11,8 +11,13 @@
   crossorigin="anonymous"></script>
 <script>
     $(function(){
-        $('input[value="작성"]')click(function(){
+        $('input[value="작성"]').click(function(){
+            var frm = $('form[name="frm"]');
+            frm.attr("action","BoardSave.jsp");
+            // validation check
             
+            
+            frm.submit();
         });
     })
 </script>

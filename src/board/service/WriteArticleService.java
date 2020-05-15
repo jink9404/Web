@@ -26,7 +26,7 @@ public class WriteArticleService {
 		// 순서번호(sequence_no) 지정
 		DecimalFormat dformat = new DecimalFormat("0000000000");
 		rec.setSequenceNo( dformat.format(groupId) + "999999");
-		
+		//groupId : 1 - setSequenceNo : 0001999999
 		// DB에 insert
 		int article_id = dao.insert(rec);
 			

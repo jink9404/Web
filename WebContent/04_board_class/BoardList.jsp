@@ -4,6 +4,7 @@
 <%@ page import="java.util.List" %>
  
 <%  //웹브라우저가 게시글 목록을 캐싱할 경우 새로운 글이 추가되더라도 새글이 목록에 안 보일 수 있기 때문에 설정
+	request.setCharacterEncoding("UTF-8");
 	response.setHeader("Pragma","No-cache");		// HTTP 1.0 version
 	response.setHeader("Cache-Control","no-cache");	// HTTP 1.1 version
 	response.setHeader("Cache-Control","no-store"); // 일부 파이어폭스 버스 관련
@@ -12,9 +13,11 @@
 
 <%
 // Service에 getArticleList()함수를 호출하여 전체 메세지 레코드 검색 
+	String pNum = request.getParameter("page");
 	ListArticleService service = ListArticleService.getInstance();
 	List <BoardRec> mList =  null; 
-	mList = service.getArticleList();
+	mList = service.getArticleList(pNum);
+	int totalPageCount = service.getTotalCount();
 %>
 
 <!DOCTYPE html>
@@ -67,5 +70,9 @@
 			</td>
 		</tr>
 	</table>
+	
+	<% for(int i = 1; i<= totalPageCount; i++){ %>
+		[<a href="BoardList.jsp?page=<%=i %>"><%=i %></a>]
+	<% }//end of for%>
 </BODY>
 </HTML>

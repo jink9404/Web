@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import guest.model.MessageException;
+
 public class BoardDao
 {
 	
@@ -166,6 +168,55 @@ public class BoardDao
 		}		
 	}
 	
+	//현재 페이지에 보여줄 게시판 목록을 얻어올때
+	public List<BoardRec> selectList(int firstRow, int endRow) throws BoardException
+	{
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<BoardRec> mList = new ArrayList<BoardRec>();
+		boolean isEmpty = true;
+		
+		try{
+			con = DriverManager.getConnection(dbUrl,dbUser,dbPass);
+			String sql = "select *  " + 
+					"      from ARTICLE             " + 
+					"   where SEQUENCE_NO IN(" + 
+					"    SELECT SEQUENCE_NO  " + 
+					"    FROM (SELECT ROWNUM rnum,SEQUENCE_NO" + 
+					"           FROM (SELECT SEQUENCE_NO FROM ARTICLE ORDER BY SEQUENCE_NO DESC))" + 
+					"    where rnum>=? AND rnum<=?" + 
+					"    )" + 
+					"    ORDER BY SEQUENCE_NO DESC ";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, firstRow);
+			ps.setInt(2, endRow);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				BoardRec rec_tmp = new BoardRec();
+				rec_tmp.setArticleId(rs.getInt("ARTICLE_ID"));
+				rec_tmp.setGroupId(rs.getInt("GROUP_ID"));
+				rec_tmp.setSequenceNo(rs.getString("SEQUENCE_NO"));
+				rec_tmp.setPostingDate(rs.getString("POSTING_DATE"));
+				rec_tmp.setReadCount(rs.getInt("READ_COUNT"));
+				rec_tmp.setWriterName(rs.getString("WRITER_NAME"));
+				rec_tmp.setTitle(rs.getString("TITLE"));
+				mList.add(rec_tmp);
+				isEmpty = false;
+			}
+			
+			if( isEmpty ) return Collections.emptyList();
+			
+			return mList;
+		}catch( Exception ex ){
+			throw new BoardException("게시판 ) DB에 목록 검색시 오류  : " + ex.toString() );	
+		} finally{
+			if( rs   != null ) { try{ rs.close();  } catch(SQLException ex){} }
+			if( ps   != null ) { try{ ps.close();  } catch(SQLException ex){} }
+			if( con  != null ) { try{ con.close(); } catch(SQLException ex){} }
+		}		
+	}
+	
+	
 	//--------------------------------------------
 	//#####	 게시글번호에 의한 레코드 검색하는 함수
 	// 			비밀번호 제외하고 모든 컬럼 검색
@@ -300,6 +351,33 @@ public class BoardDao
 			return rs.getString("minseq");
 		}catch( Exception ex ){
 			throw new BoardException("게시판 ) 부모와 연관된 자식 레코드 중 마지막 순서번호 얻어오기  : " + ex.toString() );	
+		} finally{
+			if( rs   != null ) { try{ rs.close();  } catch(SQLException ex){} }
+			if( ps   != null ) { try{ ps.close();  } catch(SQLException ex){} }
+			if( con  != null ) { try{ con.close(); } catch(SQLException ex){} }
+		}			
+	}
+	
+	
+	//게시판 전체 레코드 수  검색
+	public int getTotalCount() throws BoardException{
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int count = 0;
+
+		try{
+			con = DriverManager.getConnection(dbUrl,dbUser,dbPass);
+			String sql ="SELECT Count(*) cnt FROM article";
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt("cnt");
+			}
+			
+			return  count;
+			
+		}catch( Exception ex ){
+			throw new BoardException("게시판 ) DB에 목록 검색시 오류  : " + ex.toString() );	
 		} finally{
 			if( rs   != null ) { try{ rs.close();  } catch(SQLException ex){} }
 			if( ps   != null ) { try{ ps.close();  } catch(SQLException ex){} }

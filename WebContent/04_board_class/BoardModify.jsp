@@ -30,7 +30,7 @@
 	if(service.update(rec) == 0){
 		out.write("암호가 잘못 입력되었습니다.");
 	}else{
-		response.sendRedirect("BoardList.jsp");
+		response.sendRedirect("BoardView.jsp?articleId="+rec.getArticleId());
 	}
 %>
 

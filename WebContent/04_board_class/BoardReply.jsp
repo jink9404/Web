@@ -1,3 +1,4 @@
+<%@page import="board.model.BoardException"%>
 <%@ page import="board.service.ReplyArticleService, board.model.BoardRec"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -14,9 +15,13 @@
 	// 1. 부모게시물의 게시번호를 넘겨받기
 	String parentId = request.getParameter("parentId");	
 	// 2. Service에 reply() 호출하여 답변글 등록하기
-	ReplyArticleService service = ReplyArticleService.getInstance();	
-	BoardRec reRec = service.reply(parentId, rec);
-
+	BoardRec reRec = null;
+	ReplyArticleService service = ReplyArticleService.getInstance();
+	try{
+	reRec = service.reply(parentId, rec);
+	}catch(BoardException e){
+		
+	}
 %>
     
 <!DOCTYPE html>
@@ -26,11 +31,13 @@
 <title> 답변 글 저장하기 </title>
 </head>
 <body>
-
+<% if(reRec != null){%>
 답변글을 등록하였습니다. <br/><br/>
 
 <a href="BoardList.jsp"> 목록보기 </a> &nbsp;
 <a href="BoardView.jsp?id=<%=reRec.getArticleId()%>"> 게시글 읽기 </a>
-
+<%}else{%>
+마지막 3단계 답글은 달 수 없습니다.닝겐
+<%} %>
 </body>
 </html>

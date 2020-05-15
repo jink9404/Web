@@ -20,7 +20,7 @@
 	<h4> 게시판 글 수정하기 </h4><br/>
 	<form name='frm' method='post' action="BoardModify.jsp">
 	<input type="hidden" name=articleId value=<%=articleId %>>
-	제  목 : <input type='text' name="title" value=<%=rec.getTitle()%>><br/><br/>
+	제  목 : <input type='text' name="title" value="<%=rec.getTitle()%>"><br/><br/>
 	패스워드(수정/삭제시 필요) :
 			<input type='password' name="password"><br/><br/>
 	내  용 : <textarea name='content' rows='10' cols='40'><%=rec.getContent() %></textarea><br/><br/>

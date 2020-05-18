@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" %>
+ <%@ page language="java" contentType="text/html; charset=utf-8" %>
  <%@ page import="java.util.*" %>
  <%@ page import="mybatis.guest.model.Comment" %>    
  <%@ page import="mybatis.guest.service.CommentService" %>  
@@ -7,7 +7,7 @@
   <%
      //Map condition = new HashMap();
      List<Comment> mList = CommentService.getInstance().selectComment();
- %>
+ %> 
   
 <!DOCTYPE HTML>
 <html> 
@@ -27,7 +27,7 @@
 			<td><a href="viewComment.jsp?cId=<%=comment.getCommentNo()%>"><%= comment.getUserId()%> 님이 쓴 글</a></td>
 			<td><%= comment.getRegDate()%></td>
 		</tr>
-	<% } %>
+	<% } %>  
 </table>
 </body>
-</html>
+</html>  

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CommentMapper">
+<!-- <select id="selectComment" resultType="mybatis.guest.model.Comment"> -->
+<!-- SELECT 	comment_no commentNo,user_id userId, -->
+<!-- 		comment_content commentContent,reg_date regDate  -->
+<!-- 	FROM comment_tab -->
+<!-- </select> -->
+<select id="selectComment" resultType="comment">
+SELECT 	* FROM comment_tab ORDER BY comment_no DESC
+</select>
+
+<insert id="insertComment" parameterType="comment">
+INSERT INTO comment_tab(comment_no,user_id,comment_content,reg_date) 
+	VALUES(seq_comment.nextval,#{userId},#{commentContent},sysdate)
+</insert>
+<select id="selectCommentByPrimaryKey" parameterType="hashmap" resultType="comment">
+SELECT * FROM comment_tab 
+<!-- WHERE comment_no=#{primaryNo} -->
+<where>
+	<if test='primaryNo != null'>
+	comment_no = #{primaryNo}
+	</if>
+</where>
+</select>
+
+</mapper>

@@ -24,7 +24,15 @@ public class CommentService {
 		return repo.insertComment(comment);
 	}
 	
-	public Comment selectCommentByPrimaryKey(long primaryNo) {
+	public Comment selectCommentByPrimaryKey(int primaryNo) {
 		return repo.selectCommentByPrimaryKey(primaryNo);
+	}
+	
+	public int deleteCommentByNo(int primaryNo) {
+		return repo.deleteCommentByNo(primaryNo);
+	}
+	
+	public int updateComment(Comment comment) {
+		return repo.updateComment(comment);
 	}
 }

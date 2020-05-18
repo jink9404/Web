@@ -5,7 +5,7 @@
       
   <!-- 키에 해당하는 글번호를 넘겨받아 서비스의 메소드 호출  -->
   <% 
-  long commentNo = Integer.parseInt( request.getParameter("cId"));
+  int commentNo = Integer.parseInt( request.getParameter("cId"));
   Comment comment = CommentService.getInstance().selectCommentByPrimaryKey(commentNo);
   %>  
      
@@ -14,6 +14,20 @@
 <head>
 	<meta charset="UTF-8">
 <title> 메세지 보기 </title> 
+<script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
+<script>
+    $(function(){
+       $('#btnModify').click(function(){
+    	   window.location="updateCommentForm.jsp?commentNo=<%=comment.getCommentNo()%>";
+       });
+       $('#btnDelete').click(function(){
+           window.location="deleteComment.jsp?commentNo=<%=comment.getCommentNo()%>";
+       });
+    });
+</script>
 </head>
 <body>
 <table border="1">

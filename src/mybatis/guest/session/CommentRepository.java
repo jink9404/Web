@@ -48,7 +48,7 @@ public class CommentRepository
 		}
 		return result;
 	}
-	public Comment selectCommentByPrimaryKey(long primaryNo) {
+	public Comment selectCommentByPrimaryKey(int primaryNo) {
 		SqlSession sqlSess = getSqlSessionFactory().openSession();
 		
 		try {
@@ -59,5 +59,38 @@ public class CommentRepository
 		}finally {
 			sqlSess.close();
 		}
+	}
+	public int deleteCommentByNo(int primaryNo) {
+		SqlSession sqlSess = getSqlSessionFactory().openSession();
+		int result=0;
+		try {
+			HashMap map = new HashMap();
+			map.put("primaryNo", primaryNo);
+			result = sqlSess.delete("CommentMapper.deleteComment", primaryNo);
+			if (result>0){
+				sqlSess.commit();
+			}else {
+				sqlSess.rollback();
+			}
+		}finally{
+			sqlSess.close();
+		}
+		return result;
+	}
+	public int updateComment(Comment comment) {
+		SqlSession sqlSess = getSqlSessionFactory().openSession();
+		int result = 0;
+		try {
+			
+			result = sqlSess.update("CommentMapper.updateComment", comment);
+			if(result>0) {
+				sqlSess.commit();
+			}else {
+				sqlSess.rollback();
+			}
+		}finally {
+			sqlSess.close();
+		}
+		return result;
 	}
 }

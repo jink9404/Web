@@ -25,5 +25,10 @@ SELECT * FROM comment_tab
 	</if>
 </where>
 </select>
-
+<delete id="deleteComment" parameterType="hashmap">
+DELETE FROM comment_tab WHERE comment_no = #{primaryNO}
+</delete>
+<update id="updateComment" parameterType="comment">
+UPDATE comment_tab SET comment_content=#{commentContent}, reg_date=sysdate WHERE comment_no = #{commentNo}
+</update>
 </mapper>

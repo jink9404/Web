@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 <typeAliases>
 <typeAlias type="mybatis.guest.model.Comment" alias="comment"/>
+<typeAlias type="mybatis.board.model.BoardRec" alias="rec"/>
 </typeAliases>
 
 <environments default="development">
@@ -36,5 +37,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <!-- attention : mapper connect-->
 <mappers>
 <mapper resource="mybatis/guest/mapper/CommentMapper.xml"/> <!-- org/mybatis/example/BlogMapper.xml -->
+<mapper resource="mybatis/board/mapper/BoardMapper.xml"/>
 </mappers>
 </configuration>

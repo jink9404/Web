@@ -5,7 +5,8 @@
  
 <%
 	// Control에서 param을 넘겨받아 mList 변수에 지정
-	List <Message> mList = null;  
+	String projectName = "/JSP";
+	List <Message> mList = (List<Message>)request.getAttribute("param");
 	
 %>    
 <!DOCTYPE html>
@@ -16,7 +17,7 @@
 </head>
 <body>
 	
-	<a href="">방명록 남기기 </a><br/><br/>
+	<a href="<%=projectName %>/GuestControl?cmd=input-form">방명록 남기기 </a><br/><br/>
 	
 	<% if( mList == null ) { %>
 		남겨진 메세지가 하나도~~없습니다. <br>
@@ -27,7 +28,7 @@
 		<tr>	
 			<td> <%= msg.getId() %> </td> 
 			<td> <%= msg.getGuestName() %></td> 
-			<td> <a href=""> [ 삭제하기 ]</a> </td>			
+			<td> <a href="GuestControl?cmd=delete-form&messageId=<%=msg.getId()%>"> [ 삭제하기 ]</a> </td>			
 		</tr>
 		<tr>
 			<td colspan='3'> 

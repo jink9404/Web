@@ -34,6 +34,10 @@ public class GuestControl extends HttpServlet {
 
 		commandMap.put("main-page",	new CommandNull("main.jsp") );
 		commandMap.put("list-page",	new CommandList("listMessage.jsp") );
+		commandMap.put("input-form", new CommandNull("insertMessage.jsp"));
+		commandMap.put("input-page", new CommandInput("saveMessage.jsp"));
+		commandMap.put("delete-form", new CommandNull("deleteMessage.jsp"));
+		commandMap.put("delete-page", new CommandDelete("deleteConfirm.jsp"));
 		// 나머지도 추가하기		
 		
 	}

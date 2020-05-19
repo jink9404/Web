@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%
+    	String projectName = "/JSP";
+    
+    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +14,7 @@
 	{
 		var frmObj = document.frm;
 		
-		frmObj.action = "";
+		frmObj.action = "<%=projectName%>/GuestControl?cmd=input-page";
 		frmObj.submit();
 	}
 </script>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+   <%String projectName = "/JSP"; %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +11,6 @@
 	<font size="3" color="#bb44cc">
 		방명록에 메세지를 남겼습니다. 
 	</font><br/><br/><br/>
-	<a href=""> [ 목록보기 ]</a>
+	<a href="<%=projectName %>/GuestControl?cmd=list-page"> [ 목록보기 ]</a>
 </body>
 </html>

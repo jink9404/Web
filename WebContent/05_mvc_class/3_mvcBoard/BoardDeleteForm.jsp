@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="board.service.*, board.model.*" %>
-<% 
-	// 1. 삭제할 레코드의 게시글번호 넘겨받기
-	String articleId = request.getParameter("articleId");
-%>      
+<% String articleId = request.getParameter("articleId");  %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +10,7 @@
 </head>
 <body>
 
-<form method="post" action="BoardDelete.jsp">
+<form method="post" action="BoardControl?cmd=delete-page">
 	삭제할 글암호를 입력하세요 <br/>
 	<input type="hidden" name="articleId" value=<%=articleId %>>
 	<input type="password" name="password">

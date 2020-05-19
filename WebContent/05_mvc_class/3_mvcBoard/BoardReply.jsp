@@ -1,5 +1,5 @@
-<%@page import="board.model.BoardException"%>
-<%@ page import="board.service.ReplyArticleService, board.model.BoardRec"%>
+<%@page import="mvc.board.model.BoardException"%>
+<%@page import="mvc.board.model.BoardRec"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  
@@ -7,21 +7,13 @@
 	request.setCharacterEncoding("UTF-8");
 %>
 
-<jsp:useBean id="rec" class="board.model.BoardRec">
-	<jsp:setProperty name="rec" property="*"/>
-</jsp:useBean>
 
 <%
-	// 1. 부모게시물의 게시번호를 넘겨받기
-	String parentId = request.getParameter("parentId");	
-	// 2. Service에 reply() 호출하여 답변글 등록하기
+	
 	BoardRec reRec = null;
-	ReplyArticleService service = ReplyArticleService.getInstance();
-	try{
-	reRec = service.reply(parentId, rec);
-	}catch(BoardException e){
-		
-	}
+
+	reRec = (BoardRec)request.getAttribute("rec");
+	
 %>
     
 <!DOCTYPE html>
@@ -34,8 +26,8 @@
 <% if(reRec != null){%>
 답변글을 등록하였습니다. <br/><br/>
 
-<a href="BoardList.jsp"> 목록보기 </a> &nbsp;
-<a href="BoardView.jsp?id=<%=reRec.getArticleId()%>"> 게시글 읽기 </a>
+<a href="BoardControl?cmd=list-page"> 목록보기 </a> &nbsp;
+<a href="BoardControl?cmd=view-page&articleId=<%=reRec.getArticleId()%>"> 게시글 읽기 </a>
 <%}else{%>
 마지막 3단계 답글은 달 수 없습니다.닝겐
 <%} %>

@@ -16,7 +16,7 @@
 <body>
 	<h4> 답변 글 쓰기 </h4><br/>
 	
-	<form name='frm' method='post' action="BoardReply.jsp">
+	<form name='frm' method='post' action="BoardControl?cmd=reply-page">
 	<input type="hidden" name="parentId" value="<%=parentId%>">
 	작성자 : <input type='text' name="writerName"><br/><br/>
 	제  목 : <input type='text' name="title" ><br/><br/>

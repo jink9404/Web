@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import mvc.board.command.Command;
+import mvc.board.command.CommandDelete;
 import mvc.board.command.CommandException;
 import mvc.board.command.CommandInput;
 import mvc.board.command.CommandList;
 import mvc.board.command.CommandModify;
 import mvc.board.command.CommandNull;
+import mvc.board.command.CommandReply;
 import mvc.board.command.CommandView;
 
 
@@ -37,13 +39,21 @@ public class BoardControl extends HttpServlet {
 
 		commandMap.put("main-page",	new CommandNull("main.jsp") );
 		commandMap.put("list-page",	new CommandList("BoardList.jsp") );
+		
 		commandMap.put("reply-form",new CommandNull("BoardReplyForm.jsp"));
+		commandMap.put("reply-page",new CommandReply("BoardReply.jsp"));
+		
 		commandMap.put("modify-form",new CommandView("BoardModifyForm.jsp"));
+		commandMap.put("modify-page",new CommandModify("BoardModify.jsp"));
+		
 		commandMap.put("delete-form",new CommandNull("BoardDeleteForm.jsp"));
+		commandMap.put("delete-page",new CommandDelete("BoardDelete.jsp"));
+		
 		commandMap.put("view-page",new CommandView("BoardView.jsp"));
+		
 		commandMap.put("input-form", new CommandNull("BoardInputForm.jsp"));
 		commandMap.put("input-page", new CommandInput("BoardSave.jsp"));
-		commandMap.put("modify-page",new CommandModify("BoardModify.jsp"));
+		
 		
 		// 나머지도 추가하기		
 		

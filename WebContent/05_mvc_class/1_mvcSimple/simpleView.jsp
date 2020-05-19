@@ -2,6 +2,8 @@
     pageEncoding="UTF-8" %>
     
 <%
+	//*** request.getParameter() : get date from client
+	//*** request.getAttribute() : get data from server
 	Object obj = request.getAttribute("param");
 %>    
 <!DOCTYPE html>

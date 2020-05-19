@@ -16,9 +16,9 @@ public class MessageDao {
 	
 	// DB 연결시  관한 변수 
 	private static final String 	dbDriver	=	"oracle.jdbc.driver.OracleDriver";
-	private static final String		dbUrl		=	"jdbc:oracle:thin:@127.0.0.1:1521:orcl";
-	private static final String		dbUser		=	"scott";
-	private static final String		dbPass		=	"tiger";
+	private static final String		dbUrl		=	"jdbc:oracle:thin:@192.168.0.11:1521:orcl";
+	private static final String		dbUser		=	"MJ";
+	private static final String		dbPass		=	"0413";
 	
 	
 	private Connection	 		con;	

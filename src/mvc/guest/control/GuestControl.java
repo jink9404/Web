@@ -16,9 +16,7 @@ import mvc.guest.command.CommandInput;
 import mvc.guest.command.CommandList;
 import mvc.guest.command.CommandNull;
 
-/**
- * Servlet implementation class GuestControl
- */
+
 public class GuestControl extends HttpServlet {
 	
 	private HashMap commandMap;

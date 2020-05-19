@@ -5,6 +5,30 @@
     <welcome-file>index.jsp</welcome-file>
     <welcome-file>main.jsp</welcome-file>
   </welcome-file-list>
+  
+  <servlet>
+  <servlet-name>SimpleControl</servlet-name>
+  <servlet-class>mvc.simple.SimpleControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>SimpleControl</servlet-name>
+  <url-pattern>/sc</url-pattern>
+  <url-pattern>*.kmj</url-pattern>
+  <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  <servlet-name>GuestControl</servlet-name>
+  <servlet-class>mvc.guest.control.GuestControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>GuestControl</servlet-name>
+  <url-pattern>/GuestControl</url-pattern>
+  <url-pattern>/guest</url-pattern>
+  <url-pattern>*.guest</url-pattern>
+  </servlet-mapping>
+ 
+  
   <servlet>
   <servlet-name>HelloServlet</servlet-name>
   <servlet-class>HelloServlet</servlet-class>

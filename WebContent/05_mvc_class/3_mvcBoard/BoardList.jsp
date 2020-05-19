@@ -61,7 +61,7 @@
 			<%if(rec.getLevel()!=0){ %>
 			<img src='imgs/board_re.gif'/>
 			<%} %>
-			<a href="BoardView.jsp?articleId=<%=rec.getArticleId() %>"><%=rec.getTitle() %></a></td>
+			<a href="BoardControl?cmd=view-page&articleId=<%=rec.getArticleId()%>"><%=rec.getTitle() %></a></td>
 			<td><a><%=rec.getWriterName() %></a></td>		
 			<td><a><%=rec.getPostingDate() %></a></td>
 			<td><a><%=rec.getReadCount() %></a></td>
@@ -71,7 +71,7 @@
 	
 		<tr>
 			<td colspan="5">
-				<a href="BoardInputForm.jsp">글쓰기</a>
+				<a href="BoardControl?cmd=input-form">글쓰기</a>
 			</td>
 		</tr>
 	</table>	

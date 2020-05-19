@@ -1,13 +1,14 @@
+<%@page import="mvc.board.model.BoardRec"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="board.service.*, board.model.*" %>
+
 <%
 	// 1. 해당 게시물의 게시글번호값을 얻어온다
-	String articleId = request.getParameter("articleId");
+	String projectName = "/JSP";
 	// 2. Service에 getArticleById() 호출하여 그 게시글번호를 갖는 레코드를 검색한다.
-	ViewArticleService service = ViewArticleService.getInstance();
-	BoardRec rec =service.getArticleById(articleId);
-%>    
+	BoardRec rec = (BoardRec)request.getAttribute("rec");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,10 +37,10 @@
 	</tr>
 	<tr>
 		<td colspan="2">
-			<a href="BoardList.jsp">목록보기</a>
-			<a href="BoardReplyForm.jsp?articleId=<%=articleId%>">답변하기</a>
-			<a href="BoardModifyForm.jsp?articleId=<%=articleId%>">수정하기</a>
-			<a href="BoardDeleteForm.jsp?articleId=<%=articleId%>">삭제하기</a> 	
+			<a href="<%= projectName %>/BoardControl?cmd=list-page">목록보기</a>
+			<a href="<%= projectName %>/BoardControl?cmd=reply-form&articleId=<%=rec.getArticleId()%>">답변하기</a>
+			<a href="<%= projectName %>/BoardControl?cmd=modify-form&articleId=<%=rec.getArticleId()%>">수정하기</a>
+			<a href="<%= projectName %>/BoardControl?cmd=delete-form&articleId=<%=rec.getArticleId()%>">삭제하기</a> 	
 		</td>
 	</tr>
 	</table>

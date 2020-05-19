@@ -13,7 +13,7 @@
     $(function(){
         $('input[value="작성"]').click(function(){
             var frm = $('form[name="frm"]');
-            frm.attr("action","BoardSave.jsp");
+            frm.attr("action","BoardControl?cmd=input-page");
             // validation check
             
             

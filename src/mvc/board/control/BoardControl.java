@@ -11,8 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import mvc.board.command.Command;
 import mvc.board.command.CommandException;
+import mvc.board.command.CommandInput;
 import mvc.board.command.CommandList;
+import mvc.board.command.CommandModify;
 import mvc.board.command.CommandNull;
+import mvc.board.command.CommandView;
+
 
 
 
@@ -33,6 +37,14 @@ public class BoardControl extends HttpServlet {
 
 		commandMap.put("main-page",	new CommandNull("main.jsp") );
 		commandMap.put("list-page",	new CommandList("BoardList.jsp") );
+		commandMap.put("reply-form",new CommandNull("BoardReplyForm.jsp"));
+		commandMap.put("modify-form",new CommandView("BoardModifyForm.jsp"));
+		commandMap.put("delete-form",new CommandNull("BoardDeleteForm.jsp"));
+		commandMap.put("view-page",new CommandView("BoardView.jsp"));
+		commandMap.put("input-form", new CommandNull("BoardInputForm.jsp"));
+		commandMap.put("input-page", new CommandInput("BoardSave.jsp"));
+		commandMap.put("modify-page",new CommandModify("BoardModify.jsp"));
+		
 		// 나머지도 추가하기		
 		
 	}
@@ -74,7 +86,7 @@ public class BoardControl extends HttpServlet {
 			System.out.println("오류 : " + e.getMessage() );
 		}
 
-		RequestDispatcher reqDp = getServletContext().getRequestDispatcher( jspDir + nextPage );
+		RequestDispatcher reqDp = getServletContext().getRequestDispatcher( jspDir + nextPage);
 		reqDp.forward( request, response );
 		
 	}

@@ -28,6 +28,17 @@
   <url-pattern>*.guest</url-pattern>
   </servlet-mapping>
  
+  <servlet>
+  <servlet-name>BoardControl</servlet-name>
+  <servlet-class>mvc.board.control.BoardControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>BoardControl</servlet-name>
+  <url-pattern>/BoardControl</url-pattern>
+  <url-pattern>/board</url-pattern>
+  <url-pattern>*.board</url-pattern>
+  </servlet-mapping>
+  
   
   <servlet>
   <servlet-name>HelloServlet</servlet-name>

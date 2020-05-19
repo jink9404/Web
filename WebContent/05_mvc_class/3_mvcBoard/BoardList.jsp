@@ -1,6 +1,9 @@
+<%@page import="mvc.board.model.BoardRec"%>
+<%@page import="board.service.ListArticleService"%>
+<%@page import="mvc.board.command.CommandList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="board.model.*, board.service.*" %>
+
 <%@ page import="java.util.List" %>
  
 <%  //웹브라우저가 게시글 목록을 캐싱할 경우 새로운 글이 추가되더라도 새글이 목록에 안 보일 수 있기 때문에 설정
@@ -13,12 +16,12 @@
 
 <%
 // Service에 getArticleList()함수를 호출하여 전체 메세지 레코드 검색 
-	String pNum = request.getParameter("page");
-	int currentPage = (pNum!=null)? Integer.parseInt(pNum):1;
-	ListArticleService service = ListArticleService.getInstance();
+// 	String pNum = request.getParameter("page");
+// 	int currentPage = (pNum!=null)? Integer.parseInt(pNum):1;
+// 	ListArticleService service = ListArticleService.getInstance();
 	List <BoardRec> mList =  null; 
-	mList = service.getArticleList(pNum);
-	int totalPageCount = service.getTotalCount();
+	mList = (List<BoardRec>)request.getAttribute("param");
+// 	int totalPageCount = service.getTotalCount();
 	
 %>
 
@@ -71,20 +74,6 @@
 				<a href="BoardInputForm.jsp">글쓰기</a>
 			</td>
 		</tr>
-	</table>
-	<a href=""><<</a>
-	<% for(int i = currentPage-1; i<= currentPage+1 && currentPage<=totalPageCount; i++){ %>
-		<%if(i == 0)continue; %>
-		
-		<%if(i != currentPage){ %>
-			[<a href="BoardList.jsp?page=<%=i %>"><%=i %></a>]
-		<%}else{ %>
-			[<%=i %>]
-		<%} //if (i != currentPage) end%>
-		<%if(currentPage==totalPageCount){
-			out.write("["+(i+1)+"]");
-			break; }%>
-	<%}//end of for%>
-	<a href="">>></a>
+	</table>	
 </BODY>
 </HTML>

@@ -37,6 +37,7 @@ pageEncoding="UTF-8"%>
 </c:choose>
 </c:if>
 
+
 	<hr><hr>
 	1부터 100까지 수 중에서 하나를 잘 찍으시오~!! <br/>
 	

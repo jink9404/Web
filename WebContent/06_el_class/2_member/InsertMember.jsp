@@ -8,8 +8,8 @@ pageEncoding="UTF-8"%>
 </jsp:useBean>
 
 <%
-	MemberDao memDao = MemberDao.getInstance();
-	memDao.insertMember(mem);
+// 	MemberDao memDao = MemberDao.getInstance();
+// 	memDao.insertMember(mem);
 %>
 
 
@@ -19,10 +19,10 @@ pageEncoding="UTF-8"%>
 <title> 회원가입 </title>
 </head>
 <body>
-	아이디 : <br/>
-	패스워드 : <br/>
-	이름 : <br/>
-	전화 : <br/>
-	주소 : <br/>
+	아이디 :${mem.id} <br/>
+	패스워드 :${mem.password } <br/>
+	이름 : ${mem.name }<br/>
+	전화 : ${mem.tel }<br/>
+	주소 : ${mem.addr }<br/>
 </body>
 </html>

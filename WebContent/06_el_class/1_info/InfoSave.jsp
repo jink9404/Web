@@ -14,9 +14,9 @@ pageEncoding="UTF-8"%>
 <HEAD><TITLE> 자료 출력 </TITLE></HEAD>
 <BODY>
 	<H2>  당신의 신상명세서 확인 </H2>
-	이   름  : <br/>
-	주민번호 : <br/>
-	성  별   : <br/>  
+	이   름  : ${info.name}<br/> <!-- name is getter function, not property -->
+	주민번호 : ${info.id}<br/>
+	성  별   : ${info.gender}<br/>  
 	맞습니까????
 </BODY>
 </HTML>

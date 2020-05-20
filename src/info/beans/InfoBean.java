@@ -4,6 +4,23 @@ public class InfoBean {
 	private String name;
 	private String id;
 	
+	private int getsu;
+	private boolean flag;
+	
+	
+	
+	public int getGetsu() {
+		return getsu;
+	}
+	public void setGetsu(int getsu) {
+		this.getsu = getsu;
+	}
+	public boolean isFlag() {
+		return flag;
+	}
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
 	public void setName(String name) {
 		this.name = name;
 	}

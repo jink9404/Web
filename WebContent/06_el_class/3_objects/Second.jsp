@@ -7,12 +7,12 @@ pageEncoding="UTF-8"%>
 </head>
 <body>
 
-전 페이지의 값 :  <br/> 
+전 페이지에서 넘어오는 값 : ${param.data }  <br/> 
 
-세션의 값 :  <br/>
+세션의 값 :${sessionScope.login }  <br/>
 
-쿠키의 값 :	 <br/>
-
+쿠키의 값 :${cookie.isFlag.value }	 <br/>
+${cookie.JSESSIONID.value}
 
 <hr>
 
